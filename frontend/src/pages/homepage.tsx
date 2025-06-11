@@ -18,7 +18,31 @@ const HomePage = () => {
         borderRadius={"8px"}
         onClick={() => nav("/profil/99")}
       >
-        Test
+        Kevin (Test)
+      </Button>
+      <Button
+        backgroundColor={"black"}
+        color={"white"}
+        borderRadius={"8px"}
+        onClick={() => nav("/profil/12")}
+      >
+        Karl
+      </Button>
+      <Button
+        backgroundColor={"black"}
+        color={"white"}
+        borderRadius={"8px"}
+        onClick={() => nav("/profil/18")}
+      >
+        Cecilia
+      </Button>
+      <Button
+        backgroundColor={"black"}
+        color={"white"}
+        borderRadius={"8px"}
+        onClick={() => nav("/profil/00")}
+      >
+        Inexistant
       </Button>
     </Flex>
   );

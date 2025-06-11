@@ -1,24 +1,58 @@
-import { CompleteUserType, ResponseUserType } from "@/types";
+import {
+  ActivityType,
+  AverageSessionType,
+  CompleteUserType,
+  PerformanceType,
+  ResponseUserType,
+  UserType,
+} from "@/types";
 import axios from "axios";
 
 export async function fetchProfileDataById(
   idString?: string
-): Promise<ResponseUserType> {
+): Promise<ResponseUserType | null> {
   if (!idString) {
     throw new Error("ID is required");
   }
   const id = Number(idString);
   try {
-    const response = await axios.get(`http://localhost:3000/api/users/${id}`);
-    return response.data;
+    const userData = await axios.get<{ data: UserType }>(
+      `http://localhost:3123/user/${id}`
+    );
+    const activityData = await axios.get<{ data: ActivityType }>(
+      `http://localhost:3123/user/${id}/activity`
+    );
+    const averageSessionData = await axios.get<{ data: AverageSessionType }>(
+      `http://localhost:3123/user/${id}/average-sessions`
+    );
+    const performanceData = await axios.get<{ data: PerformanceType }>(
+      `http://localhost:3123/user/${id}/performance`
+    );
+    if (
+      !userData.data ||
+      !activityData.data ||
+      !averageSessionData.data ||
+      !performanceData.data
+    ) {
+      throw new Error("Data not found");
+    }
+    return {
+      user: userData.data.data,
+      activity: activityData.data.data,
+      averageSession: averageSessionData.data.data,
+      performance: performanceData.data.data,
+    };
   } catch {
     const response = await axios.get<CompleteUserType>(
       `/src/services/profileData.json`
     );
-    console.log(response.data.USER_MAIN_DATA);
     const userData = response.data.USER_MAIN_DATA.find(
       (user) => user.id === id
     );
+    if (!userData) {
+      return null;
+    }
+
     const activityData = response.data.USER_ACTIVITY.find(
       (activity) => activity.userId === id
     );
@@ -28,13 +62,6 @@ export async function fetchProfileDataById(
     const performanceData = response.data.USER_PERFORMANCE.find(
       (performance) => performance.userId === id
     );
-
-    console.log({
-      user: userData,
-      activity: activityData,
-      averageSession: averageSessionData,
-      performance: performanceData,
-    });
 
     return {
       user: userData,

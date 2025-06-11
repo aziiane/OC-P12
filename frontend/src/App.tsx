@@ -5,9 +5,19 @@ import Navbar from "./components/navbar";
 
 function App() {
   return (
-    <Flex direction="column" height="100vh">
+    <Flex
+      background={"black"}
+      direction="column"
+      height={"100%"}
+      overflow={"scroll"}
+    >
       <Navbar />
-      <Flex direction={"row"} height={"100%"} width="100%">
+      <Flex
+        direction={"row"}
+        height={"fill-available"}
+        width="100%"
+        minHeight={"calc(100% - 61px)"}
+      >
         <Sidebar />
         <Outlet />
       </Flex>

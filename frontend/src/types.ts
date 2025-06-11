@@ -55,3 +55,27 @@ export interface ResponseUserType {
   averageSession?: AverageSessionType;
   performance?: PerformanceType;
 }
+
+export interface RechartsTickType {
+  className: string;
+  fill: string;
+  height: number;
+  index: number;
+  orientation: string;
+  payload: {
+    index: number;
+    coordinate: number;
+    isShow: boolean;
+    offset: number;
+    tickCoord: number;
+    value: number;
+  };
+  stroke: string;
+  textAnchor: string;
+  tickFormatter: string;
+  verticalAnchor: string;
+  visibleTicksCount: number;
+  width: number;
+  x: number;
+  y: number;
+}

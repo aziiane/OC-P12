@@ -6,12 +6,14 @@ const Navbar = () => {
     <Flex
       bg={"#000"}
       width={"100%"}
+      maxWidth={"1440px"}
       height={"91px"}
       color={"white"}
       justifyContent={"space-between"}
       alignItems={"center"}
       pl={"20px"}
-      pr={"50px"}
+      pr={"100px"}
+      fontSize={"24px"}
     >
       <Image src="/logo.svg" alt="Logo" />
       <NavLink to="/">Accueil</NavLink>
