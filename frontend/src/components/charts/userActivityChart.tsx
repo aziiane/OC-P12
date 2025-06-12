@@ -22,9 +22,14 @@ const UserActivityChart = ({ data }: UserActivityChartProps) => {
         </Flex>
       </Card.Header>
       <Card.Body border={"none"}>
-        <BarChart data={data} width={735} height={200}>
+        <BarChart data={data} width={800} height={200}>
           <XAxis dataKey="day" tickLine={false} />
-          <YAxis dataKey="calories" axisLine={false} tickLine={false} />
+          <YAxis
+            dataKey="calories"
+            axisLine={false}
+            tickLine={false}
+            orientation="right"
+          />
           <Tooltip
             contentStyle={{ background: "red" }}
             itemStyle={{ color: "white" }}
