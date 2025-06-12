@@ -64,6 +64,7 @@ const UserActivityChart = ({ data }: UserActivityChartProps) => {
               (dataMax: number) => dataMax + 1,
             ]}
             interval={0}
+            ticks={[...(data?.map((d) => d.kilogram) || [])]}
             yAxisId={"kilogram"}
           />
           <YAxis
