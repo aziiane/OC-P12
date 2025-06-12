@@ -1,13 +1,38 @@
 import { ActivityType } from "@/types";
-import { Card, Flex, Text } from "@chakra-ui/react";
+import { Box, Card, Flex, Text } from "@chakra-ui/react";
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts";
 import DotText from "../ui/dot-with-text";
+import {
+  NameType,
+  Payload,
+  ValueType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 type UserActivityChartProps = {
   data?: ActivityType["sessions"];
 };
 
 const UserActivityChart = ({ data }: UserActivityChartProps) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active: boolean | undefined;
+    payload: Payload<ValueType, NameType>[] | undefined;
+  }) => {
+    if (active && payload && payload.length) {
+      const kilo = payload.find((p) => p.dataKey === "kilogram")?.value;
+      const calories = payload[0].payload.calories;
+      return (
+        <Box backgroundColor="red" padding="10px" border="1px solid #ccc">
+          <p>{kilo}kg</p>
+          <p>{calories}Kcal</p>
+        </Box>
+      );
+    }
+
+    return null;
+  };
   return (
     <Card.Root border={"none"} background={"#FBFBFB"}>
       <Card.Header>
@@ -30,18 +55,43 @@ const UserActivityChart = ({ data }: UserActivityChartProps) => {
             tickLine={false}
           />
           <YAxis
-            dataKey="calories"
+            dataKey={"kilogram"}
             axisLine={false}
             tickLine={false}
             orientation="right"
+            domain={[
+              (dataMin: number) => dataMin - 1,
+              (dataMax: number) => dataMax + 1,
+            ]}
+            interval={0}
+            yAxisId={"kilogram"}
+          />
+          <YAxis
+            yAxisId={"calories"}
+            dataKey={"calories"}
+            axisLine={false}
+            tickLine={false}
+            hide
           />
           <Tooltip
-            contentStyle={{ background: "red" }}
-            itemStyle={{ color: "white" }}
-            labelStyle={{ display: "none" }}
+            content={({ active, payload }) => {
+              return <CustomTooltip active={active} payload={payload} />;
+            }}
           />
-          <Bar barSize={7} radius={5} dataKey="kilogram" fill="#282D30" />
-          <Bar barSize={7} radius={5} dataKey="calories" fill="#E60000" />
+          <Bar
+            barSize={7}
+            radius={5}
+            dataKey="kilogram"
+            yAxisId={"kilogram"}
+            fill="#282D30"
+          />
+          <Bar
+            barSize={7}
+            radius={5}
+            dataKey="calories"
+            yAxisId={"calories"}
+            fill="#E60000"
+          />
         </BarChart>
       </Card.Body>
     </Card.Root>

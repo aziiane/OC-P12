@@ -84,14 +84,14 @@ const ProfilePage = () => {
             unit="g"
           />
           <InformationCard
-            label="Porteines"
+            label="Glucides"
             data={userData?.user?.keyData.carbohydrateCount}
             color="#F9CE23"
             icon="apple"
             unit="g"
           />
           <InformationCard
-            label="Porteines"
+            label="Lipides"
             data={userData?.user?.keyData.lipidCount}
             color="#FD5181"
             icon="burger"
