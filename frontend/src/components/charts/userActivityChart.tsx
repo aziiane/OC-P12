@@ -23,7 +23,12 @@ const UserActivityChart = ({ data }: UserActivityChartProps) => {
       </Card.Header>
       <Card.Body border={"none"}>
         <BarChart data={data} width={800} height={200}>
-          <XAxis dataKey="day" tickLine={false} />
+          <XAxis
+            dataKey={(data) => {
+              return new Date(data.day).getDate();
+            }}
+            tickLine={false}
+          />
           <YAxis
             dataKey="calories"
             axisLine={false}
